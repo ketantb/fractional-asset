@@ -1,0 +1,151 @@
+.form-section1 {
+    padding: 3rem 1.5rem 3rem;
+    padding-left: 3rem;
+}
+
+.form-section1 form {
+    display: flex;
+    flex-direction: column;
+
+}
+
+.form-section1 form input {
+    margin-block-end: 2rem;
+    height: 3rem;
+    padding: 1rem;
+}
+
+.form-section1 form div select {
+    width: 105%;
+    height: 2.5rem;
+}
+
+.form-section2 {
+    padding: 3rem 1.5rem 3rem;
+    padding-left: 3rem;
+    display: flex;
+    flex-direction: column;
+}
+
+
+
+.form-section2 form .selectoptions {
+    margin-top: 2rem;
+}
+
+.form-section2 form .selectoptions label {
+    margin-top: 0.5rem;
+    width: 70%;
+}
+
+.form-section2 form .selectoptions select {
+    width: 80%;
+    height: 2.5rem;
+    margin-top: 0.5rem;
+}
+
+
+.form-section3 {
+    padding: 3rem 1.5rem 3rem;
+    padding-left: 3rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-section3 form select {
+    width: 80%;
+    height: 2.5rem;
+    margin-top: 0.5rem;
+}
+
+.form-section3 form textarea {
+    width: 80%;
+    min-height: 10rem;
+    margin-top: 2rem;
+}
+
+.feedback-msg {
+    padding: 2rem;
+    text-align: center;
+    font-family: 'candara';
+    color: blue;
+}
+
+
+@media only screen and (min-width:200px) and (max-width:1000px) {
+    .form-section1 {
+        padding: 1rem 1rem 1rem;
+        padding-left: 0rem;
+        margin: auto;
+    }
+
+    .form-section1 form {
+        display: flex;
+        flex-direction: column;
+
+    }
+
+    .form-section1 form input {
+        margin-block-end: 2rem;
+        height: 3rem;
+        padding: 1rem;
+    }
+
+    .form-section1 form div select {
+        width: 105%;
+        height: 2.5rem;
+    }
+
+    .form-section2 {
+        padding: 1rem 1rem 1rem;
+        padding-left: 0rem;
+        display: flex;
+        flex-direction: column;
+    }
+
+
+
+    .form-section2 form .selectoptions {
+        margin-top: 2rem;
+    }
+
+    .form-section2 form .selectoptions label {
+        margin-top: 0.5rem;
+        width: 70%;
+    }
+
+    .form-section2 form .selectoptions select {
+        width: 105%;
+        height: 2.5rem;
+        margin-top: 0.5rem;
+    }
+
+
+    .form-section3 {
+        padding: 1rem 1rem 1rem;
+        padding-left: 0rem;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .form-section3 form select {
+        width: 105%;
+        height: 2.5rem;
+        margin-top: 0.5rem;
+    }
+
+    .form-section3 form textarea {
+        width: 105%;
+        min-height: 10rem;
+        margin-top: 2rem;
+    }
+
+    .feedback-msg {
+        padding: 2rem;
+        text-align: center;
+        font-family: 'candara';
+        color: blue;
+    }
+
+
+}
