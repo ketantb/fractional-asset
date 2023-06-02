@@ -4,7 +4,7 @@ const Schema = mongoose.Schema
 
 const AddPropertySchema = new mongoose.Schema({
   //locality details
-  advertiseType: { type: String },
+  propertyAdType: { type: String },
   street: { type: String },
   landmark: { type: String },
   city: { type: String },

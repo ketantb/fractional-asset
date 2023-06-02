@@ -1,7 +1,7 @@
 const mongoose = require("mongoose")
 
 const landSchema = new mongoose.Schema({
-    advertiseType: { type: String },
+    propertyAdType: { type: String },
     landType: { type: String },
     location: { type: String },
     dimensions: { type: String },

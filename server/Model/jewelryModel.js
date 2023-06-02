@@ -1,7 +1,7 @@
 const mongoose = require("mongoose")
 
 const jewelrySchema = new mongoose.Schema({
-    advertiseType: { type: String },
+    propertyAdType: { type: String },
     jewelryType: { type: String },
     metalType: { type: String },
     gemstones: { type: String },

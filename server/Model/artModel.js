@@ -1,7 +1,7 @@
 const mongoose = require("mongoose")
 
 const artSchema = new mongoose.Schema({
-    advertiseType: { type: String },
+    propertyAdType: { type: String },
     artistName: { type: String },
     artworkTitle: { type: String },
     medium: { type: String },
