@@ -1,0 +1,173 @@
+@import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
+
+.footer-wrapper {
+    display: flex;
+    width: 100%;
+    /* border: 1px solid black; */
+    margin-top: 3rem;
+    background-color:black;
+    padding-top: 1rem;
+    padding-bottom: 2rem;
+}
+
+
+.footer-wrapper .section1 {
+    /* border: 1px solid black; */
+    width: 50%;
+    font-weight: bold;
+    padding: 2rem 2rem;
+}
+
+.footer-wrapper .section1 .footer-title {
+    color: rgb(244, 105, 5);
+    font-family: 'Anton';
+    border-bottom: 1px solid rgb(111, 110, 110);
+    padding-bottom: 2rem;
+}
+
+
+.footer-wrapper .section2 {
+    /* border: 1px solid black; */
+    width: 40%;
+    color: rgb(0, 0, 0);
+    padding: 2rem 2rem;
+}
+
+.footer-wrapper .section2 .input-section {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1rem;
+}
+
+.footer-wrapper .section2 .input-section input {
+    border: 1px solid white;
+    margin-right: 1rem;
+    padding: 0.5rem 1rem;
+    font-family: 'calibri';
+    font-size: 1.1rem;
+    border-radius: 0.2rem;
+    width: 90%;
+    height: 2.5rem;
+}
+
+.footer-wrapper .section2 .input-section .btn {
+    background-color:  rgb(244, 105, 5);
+    color: rgb(255, 255, 255);
+}
+
+.footer-wrapper .section2 .icon-wrapper {
+    /* border: 1px solid white; */
+    margin-top: 4rem;
+    display: flex;
+}
+
+.footer-wrapper .section2 .icon-wrapper .icon-item {
+    margin-inline-end: 1rem;
+    color: rgb(3, 99, 128);
+}
+
+.footer-wrapper .section2 .icon-wrapper .icon-item:hover {
+    color: black;
+}
+
+.footer-wrapper .section1 .col1 {
+    /* border: 1px solid black; */
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+.footer-wrapper .section1 .col1 .btn {
+    text-align: left;
+    color: rgb(223, 223, 251);
+    cursor: auto;
+    font-weight: 500;
+}
+
+.footer-wrapper .section1 .col1 .btn:hover {
+    background-color: rgb(1, 5, 27);
+    color: antiquewhite;
+}
+
+
+
+@media only screen and (max-width:900px) {
+    .footer-wrapper {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        /* border: 1px solid black; */
+        margin-top: 2rem;
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+    }
+
+    .footer-wrapper .section1 {
+        width: 90%;
+        margin: auto;
+        padding: 1rem;
+        text-align: center;
+    }
+
+    .footer-wrapper .section1 .footer-title {
+        font-family: 'Anton';
+        border-bottom: 1px solid rgb(111, 110, 110);
+        padding-bottom: 1rem;
+    }
+
+    .footer-wrapper .section1 .icon-wrapper {
+        /* border: 1px solid white; */
+        margin-top: 0rem;
+        display: flex;
+        justify-content: center;
+    }
+
+    .footer-wrapper .section1 .icon-wrapper .icon-item {
+        margin-inline-end: 1rem;
+        color: rgb(3, 99, 128);
+
+    }
+
+
+    .footer-wrapper .section2 {
+        width: 90%;
+        margin: auto;
+        padding: 1rem;
+        text-align: center;
+
+    }
+
+
+    .footer-wrapper .section2 .icon-wrapper {
+        /* border: 1px solid white; */
+        margin-top: 4rem;
+        display: flex;
+        justify-content: center;
+    }
+
+    .footer-wrapper .section1 .col1 {
+        /* border: 1px solid black; */
+        width: 50%;
+        display: flex;
+        flex-direction: column;
+        text-align: left;
+        margin: auto;
+    }
+
+    .footer-wrapper .section1 .col1 .btn {
+        /* text-align: left; */
+        color: rgb(1, 1, 32);
+        cursor: auto;
+        font-weight: 500;
+        text-align: center;
+
+    }
+
+    .footer-wrapper .section1 .col1 .btn:hover {
+        background-color: rgb(1, 5, 27);
+        color: antiquewhite;
+    }
+
+}

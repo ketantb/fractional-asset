@@ -1,0 +1,32 @@
+.buyProperty-header{
+    margin-top: 7rem;
+    margin-left: 3rem;
+}
+
+.buyProperty-header span{
+    margin-left: 1rem;
+}
+
+
+.buy-card-wrapper{
+    width: 100%;
+    margin: auto;
+    /* border:1px solid black; */
+    margin-top: 2rem;
+}
+
+
+
+@media only screen and (max-width:900px) {
+    .buy-card-wrapper{
+        width: 100%;
+        margin: auto;
+        /* border:1px solid black; */
+        margin-top: 1rem;
+    }
+
+    .buyProperty-header span{
+        margin-left: 1rem;
+    }
+    
+}

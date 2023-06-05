@@ -1,0 +1,168 @@
+@import url('https://fonts.googleapis.com/css2?family=Alkatra&display=swap');
+
+.whyus-wrapper {
+    /* background-color: red; */
+    padding: 1rem;
+    padding-bottom: 2.5rem;
+    /* background-color: rgb(228, 240, 244); */
+    margin-top: 5rem;
+}
+
+.whyus-wrapper .title {
+    font-family: 'alkatra';
+    text-align: center;
+    letter-spacing: 3px;
+}
+
+.whyus-wrapper .card-wrapper-inner {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.whyus-wrapper .card-wrapper-inner .card {
+    width: 20%;
+    height: 20rem;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    padding-top: 1rem;
+    /* background-color: rgb(228, 240, 244); */
+    border: 1px solid lightgrey;
+    margin: 0 1rem;
+    box-shadow: rgba(1, 7, 45, 0.25) 0px 30px 60px -0px inset, rgba(186, 220, 249, 0.3) 0px 18px 36px -18px inset;
+}
+
+.whyus-wrapper .card-wrapper-inner .card:last-child{
+    margin-top: 0;
+}
+
+.whyus-wrapper .card-wrapper-inner .card .img-wrapper {
+    text-align: center;
+    /* border: 1px solid black; */
+    height: 6rem;
+    margin-top: 1rem;
+}
+
+.whyus-wrapper .card-wrapper-inner .card .img-wrapper img {
+    transition: 0.3s;
+}
+
+.whyus-wrapper .card-wrapper-inner .card .img-wrapper img:hover {
+    transform: scale(1.15);
+}
+
+.whyus-wrapper .card-wrapper-inner .card .heading {
+    font-weight: bold;
+}
+
+.whyus-wrapper .card-wrapper-inner .para {
+    /* border: 1px solid black; */
+    padding: 1rem 1rem;
+    text-align: center;
+    width: 75%;
+    margin: auto;
+}
+
+.whyus-wrapper div:last-child {
+    /* border: 0.5px solid black; */
+    width: fit-content;
+    margin: auto;
+    margin-top: 1rem;
+    margin-bottom: 1 rem;
+}
+
+.whyus-wrapper .know-more {
+    background-color: #007aff;
+    color: black;
+    transition: 0.2s;
+    cursor: pointer;
+    margin: auto;
+    border-radius: 0rem;
+}
+
+.whyus-wrapper .know-more:hover {
+    transform: scale(1.1);
+    background-color: black;
+    color: white;
+}
+
+@media only screen and (max-width:900px) {
+    .whyus-wrapper {
+        /* background-color: red; */
+        padding: 1rem;
+        margin-top: 1rem;
+    }
+
+    .whyus-wrapper .title {
+        font-family: 'alkatra';
+        text-align: center;
+        letter-spacing: 0px;
+        font-size: 1.5rem;
+        margin-top: 1rem;
+    }
+
+    .whyus-wrapper .card-wrapper-inner {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .whyus-wrapper .card-wrapper-inner .card {
+        width: 90%;
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        padding: 20rem auto;
+        border: none;
+    }
+
+    .whyus-wrapper .card-wrapper-inner .card .img-wrapper {
+        text-align: center;
+        /* border: 1px solid black; */
+        height: 6rem;
+        margin-top: 0rem;
+    }
+
+    .whyus-wrapper .card-wrapper-inner .card .img-wrapper img {
+        transition: 0.3s;
+    }
+
+    .whyus-wrapper .card-wrapper-inner .card .img-wrapper img:hover {
+        transform: scale(1.1);
+    }
+
+    .whyus-wrapper .card-wrapper-inner .card .heading {
+        font-weight: bold;
+    }
+
+    .whyus-wrapper .card-wrapper-inner .para {
+        /* border: 1px solid black; */
+        padding: 1rem 1rem;
+        text-align: center;
+        width: 75%;
+        margin: auto;
+    }
+
+    .whyus-wrapper div:last-child {
+        /* border:1px solid black; */
+        width: fit-content;
+        margin: auto;
+        margin-top: 2rem;
+    }
+
+    .whyus-wrapper .know-more {
+        background-color: #007aff;
+        color: black;
+        transition: 0.2s;
+        cursor: pointer;
+    }
+
+    .whyus-wrapper .know-more:hover {
+        transform: scale(1.1);
+        background-color: black;
+        color: white;
+    }
+
+
+}
