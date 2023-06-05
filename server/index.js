@@ -18,18 +18,18 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')))
 require("./connectionDb")
 
 //importing all the routes
-const userRoute = require("./routes/register-signin");
-const reserveShares=require("./routes/reserve-shares")
+app.use(require("./routes/register-signin"))
 
-app.use("/", userRoute);
 app.use(require("./routes/property-routes"))
 app.use(require("./routes/art-routes"))
 app.use(require("./routes/yacht-routes"))
 app.use(require("./routes/car-routes"))
 app.use(require("./routes/jewelry-routes"))
 app.use(require("./routes/land-routes"))
-app.use(require("./routes/buy-routes"))
-app.use("/", reserveShares)
+
+app.use(require("./routes/reserve-shares"))
+
+
 
 app.get("/", (req, resp) => {
   resp.send("This Is Fractional Properties");

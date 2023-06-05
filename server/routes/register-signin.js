@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
-const UsersData = require('../../../fractional-asset1/server/Model/registrationModel')
+const UsersData = require('../Model/registrationModel')
 const jwt = require('jsonwebtoken')
 const { body, validationResult } = require('express-validator')
 require('dotenv').config();
