@@ -5,9 +5,9 @@ dotenv.config()
 
 // Cloudinary configuration
 cloudinary.config({
-    cloud_name: 'harshada0611',
-    api_key: 616754296691863,
-    api_secret: '62EVwEk97ZaxzCdqYJe-RdJjkZw'
+    cloud_name: process.env.CLOUDINARY_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET
 });
 //Creating a storage object to store the images in destination folder
 const storage = multer.diskStorage({
