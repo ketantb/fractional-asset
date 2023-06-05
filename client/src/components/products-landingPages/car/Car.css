@@ -1,0 +1,180 @@
+@import url('https://fonts.googleapis.com/css2?family=Prata&display=swap');
+
+.bg-image {
+  background-image: url("https://images.pexels.com/photos/210617/pexels-photo-210617.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1");
+  background-position: center center;
+  background-size: cover;
+  height: 720px;
+  position: relative;
+  margin-bottom: 5rem;
+}
+
+.property-page-wrapper .bg-image .container .row {
+  display: flex;
+  flex-direction: row;
+}
+
+.property-page-wrapper .banner-title {
+  font-size: 1.1rem;
+  text-align: center;
+  color: rgb(255, 255, 255);
+  text-shadow: 1px 1px 1px rgb(226, 181, 181);
+  padding: 4% 1%;
+  padding-bottom: 0rem;
+  letter-spacing: 3px;
+  margin: auto;
+  font-weight: bold;
+  font-family: 'Prata';
+  margin-bottom: 0rem;
+  display: flex;
+}
+
+.property-page-wrapper .bg-image #main-section {
+  border-radius: 1px;
+  padding: 2rem 2rem;
+  position: absolute;
+  top: 25%;
+  left: 35%;
+  transform: translate(-50%, -50%);
+  width: 50%;
+  height: fit-content;
+  margin-top: 18rem;
+  text-align: center;
+  border-radius: 0.5rem;
+  /* border:1px solid red; */
+}
+
+.property-page-wrapper .home-detials-wrapper {
+  margin-bottom: 2rem;
+}
+
+.property-page-wrapper .bg-image .container .row .bgwrapper {
+  background-color: rgba(0, 0, 0, 0.4);
+  height: 10rem;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.property-page-wrapper .bg-image .container .row #main-section .know-more-btn {
+  /* border:1px solid yellow; */
+  cursor: pointer;
+}
+
+.property-page-wrapper .bg-image .container .row #main-section .know-more-btn .btn {
+  font-size: 0.8rem;
+}
+
+.property-page-wrapper .bg-image .container .row #main-section .know-more-btn:hover {
+  color: orange;
+  background-color: rgba(118, 118, 118, 0.8);
+}
+
+/* card slider */
+.property-page-wrapperv h4 {
+  padding-left: 3rem;
+}
+
+.property-page-wrapperousecard-wrap-outer {
+  width: 98%;
+  margin: auto;
+  margin-top: 7rem;
+
+}
+
+.property-page-wrapperousecard-wrap-outer .housecard-wrap-inner {
+  display: flex;
+  margin-top: 1rem;
+  overflow-x: auto;
+  margin: auto;
+  padding: 1rem;
+
+  /* background-color: red; */
+}
+
+
+
+
+.housecard-wrap-inner::-webkit-scrollbar {
+  width: 6px;
+}
+
+.housecard-wrap-inner::-webkit-scrollbar-thumb {
+  background-color: transparent;
+}
+
+.housecard-wrap-inner::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.housecard-wrap-inner::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+
+/* card slider ends */
+
+
+@media only screen and (max-width:900px) {
+  .bg-image {
+    background-image: url("../../../assets/banner.jpg");
+    background-position: center center;
+    background-size: cover;
+    height: 700px;
+    position: relative;
+    margin-bottom: 4rem;
+  }
+
+  .property-page-wrapper .banner-title {
+    font-size: 0.9rem;
+    text-align: center;
+    color: rgb(255, 255, 255);
+    text-shadow: 2px 1px 1px rgb(226, 181, 181);
+    padding: 0.5rem 0rem;
+    padding-bottom: 0rem;
+    letter-spacing: 3px;
+    margin: auto;
+    font-weight: bold;
+    font-family: 'Prata';
+    margin-bottom: 0rem;
+  }
+
+  .property-page-wrapper .bg-image #main-section {
+    /* background-color: rgba(0, 0, 0, 0.912); */
+    border-radius: 1px;
+    padding: 2rem 0.5rem;
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 85%;
+    height: fit-content;
+    margin-top: 21rem;
+    text-align: center;
+    border-radius: 0.5rem;
+  }
+
+  .bg-image #main-section .input-group {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .bg-image #main-section .input-group input {
+    width: 100%;
+    border-radius: 0.3rem;
+  }
+
+  .bg-image #main-section .input-group #button-addon2 {
+    width: 40%;
+    margin: auto;
+    border-radius: 0.3rem;
+    margin-top: 0.5rem;
+  }
+
+
+
+
+}

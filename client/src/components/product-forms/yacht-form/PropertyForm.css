@@ -1,0 +1,60 @@
+.property-form-wrapper {
+   width: 50%;
+   margin: auto;
+   margin-top: 7rem;
+   border-bottom-right-radius: 1rem;
+   border-bottom-left-radius: 1rem;
+
+}
+
+.property-form-wrapper .title{
+   font-family: 'calibri';
+   margin-bottom: 2rem;
+   color: brown;
+}
+
+.property-form-wrapper .upload-image-form-wrapper {
+   width: 100%;
+
+}
+
+.property-form-wrapper .upload-image-form-wrapper .images-wrapper {
+   /* background-color: green; */
+   display: flex;
+   flex-wrap: wrap;
+}
+
+.property-form-wrapper .upload-image-form-wrapper .images-wrapper .uploaded-images {
+   width: 4rem;
+   height: 4rem;
+   margin-right: 1rem;
+   margin-top: 1rem;
+}
+
+.property-form-wrapper .upload-image-form-wrapper .images-wrapper .uploaded-images img {
+   width: 100%;
+   height: 100%;
+}
+
+.property-form-wrapper .btn {
+   padding: 1rem;
+   width: 3rem;
+   margin-top: 2rem;
+   font-size: 1.1rem;
+}
+
+@media only screen and (max-width:900px) {
+   .property-form-wrapper {
+      width: 90%;
+      margin: auto;
+      margin-top: 10rem;
+   }
+
+   .property-form-wrapper .btn {
+      padding: 1rem;
+      width: 3rem;
+      margin-top: 1rem;
+      font-size: 1.1rem;
+   }
+
+}
