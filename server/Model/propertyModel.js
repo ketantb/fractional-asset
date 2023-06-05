@@ -3,8 +3,8 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema
 
 const AddPropertySchema = new mongoose.Schema({
-
   //locality details
+  propertyAdType: { type: String },
   street: { type: String },
   landmark: { type: String },
   city: { type: String },
@@ -21,7 +21,7 @@ const AddPropertySchema = new mongoose.Schema({
   availableShares: { type: Number },
   perSharePrice: { type: Number },
   perSharePriceCurrency: { type: String },
-  description: { type: String },
+  additionalInfo: { type: String },
   images: [{ type: String }],
   price: { type: Number },
   priceCurrency: { type: String },
@@ -30,9 +30,7 @@ const AddPropertySchema = new mongoose.Schema({
   postingTime: { type: String },
   productType: {type: String, default: 'property'},
   productId: { type: String },
-  userId: Schema.Types.ObjectId,
-  buyStatus: {type: Boolean, default: false },
-  rentalStatus: { type: Boolean, default: false }
+  userId: Schema.Types.ObjectId
 });
 
 module.exports = mongoose.model("property", AddPropertySchema);

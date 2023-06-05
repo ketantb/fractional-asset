@@ -1,6 +1,7 @@
 const mongoose = require("mongoose")
 
 const yachtSchema = new mongoose.Schema({
+    propertyAdType: { type: String },
     manufacturer: { type: String },
     model: { type: String },
     manufacturedYear: { type: String },
@@ -17,28 +18,22 @@ const yachtSchema = new mongoose.Schema({
     fuelCapacityUnit: { type: String },
     waterCapacity: { type: Number },
     waterCapacityUnit: { type: String },
-    accommodationsType: { type: String },
     accommodationsQty: { type: Number },
     numberOfCabins: { type: Number },
     numberOfHeads: { type: Number },
     generator: { type: Boolean },
     airConditioning: { type: Boolean },
     electronics: [{ type: String }],
+    aminities: [],
     price: { type: Number },
-    priceCurrency: { type: String },
     totalShares: { type: Number },
     availableShares: { type: Number },
-    perSharePrice: { type: Number },
-    perSharePriceCurrency: { type: String },
-    description: { type: String },
+    perSharePrice: { type: Number },description: { type: String },
     images: [{ type: String }],
     postingDate: { type: String },
     postingTime: { type: String },
     productType: { type: String, default: 'yacht' },
-    productId: { type: String },
-    userId: mongoose.Schema.Types.ObjectId,
-    buyStatus: {type: Boolean, default: false },
-    rentalStatus: { type: Boolean, default: false }
+    userId: mongoose.Schema.Types.ObjectId
 })
 
 module.exports = mongoose.model("yacht", yachtSchema)
