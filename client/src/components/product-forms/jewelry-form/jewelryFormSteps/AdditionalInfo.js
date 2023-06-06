@@ -1,9 +1,9 @@
 import React from 'react';
 
-const JewelryAdditionalInfo = ({ jewelryAdditionalDetails, setJewelryAdditionalDetails,err,setErr }) => {
+const AdditionalInfo = ({ additionalDetails, setAdditionalDetails,err,setErr }) => {
 
     const handleInputs = (e) => {
-        setJewelryAdditionalDetails(e.target.value)
+        setAdditionalDetails(e.target.value)
     };
 
    
@@ -15,11 +15,11 @@ const JewelryAdditionalInfo = ({ jewelryAdditionalDetails, setJewelryAdditionalD
             ) : (null)}
             <textarea style={{ minHeight: '5rem', minWidth: '22rem', maxHeight: '30rem' ,maxWidth:'100%' }}
                 name='additionalInfo'
-                value={jewelryAdditionalDetails}
+                value={additionalDetails}
                 onChange={handleInputs}
             />
         </div>
     );
 };
 
-export default JewelryAdditionalInfo;
+export default AdditionalInfo;

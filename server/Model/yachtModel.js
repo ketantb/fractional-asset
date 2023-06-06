@@ -21,18 +21,14 @@ const yachtSchema = new mongoose.Schema({
     accommodationsQty: { type: Number },
     numberOfCabins: { type: Number },
     numberOfHeads: { type: Number },
-    generator: { type: Boolean },
-    airConditioning: { type: Boolean },
-    electronics: [{ type: String }],
-    aminities: [],
+    aminties: [{ type: String }],
     price: { type: Number },
     totalShares: { type: Number },
     availableShares: { type: Number },
-    perSharePrice: { type: Number },description: { type: String },
-    images: [{ type: String }],
-    postingDate: { type: String },
-    postingTime: { type: String },
+    perSharePrice: { type: Number },
+    imgArr: [{ type: String }],
     productType: { type: String, default: 'yacht' },
+    additionalDetails: { type: String },
     userId: mongoose.Schema.Types.ObjectId
 })
 

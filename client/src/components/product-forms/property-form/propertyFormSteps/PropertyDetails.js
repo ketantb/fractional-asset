@@ -39,7 +39,7 @@ const PropertyDetails = ({ propertyData, setPropertyData }) => {
           aria-labelledby="demo-row-radio-buttons-group-label"
           name='propertyAdType' value={propertyData.propertyAdType} onChange={handleInputs}>
           <FormControlLabel value="Rent" control={<Radio />} label="Rent" />
-          <FormControlLabel value="Sale" control={<Radio />} label="Sale" />
+          <FormControlLabel value="Sell" control={<Radio />} label="Sell" />
         </RadioGroup>
       </FormControl>
 

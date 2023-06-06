@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import './LandForm.css'
 import axios from '../../../helpers/axios';
 // import axios from 'axios'
-import {toast} from 'react-hot-toast';
+import { toast } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom'
 
 import { Button } from '@mui/material';
@@ -26,8 +26,8 @@ const Landform = () => {
   const [LandData, setLandData] = useState({
     propertyAdType: '', landType: '',
     dimensions: '', dimensionsUnit: '', lotSize: '',
-    lotSizeUnit: '', zoning: '', roadAccess: '', 
-    price: '', totalShares: '', availableShares: '', 
+    lotSizeUnit: '', zoning: '', roadAccess: '',
+    price: '', totalShares: '', availableShares: '',
     perSharePrice: ''
   })
   //LOCATION DETAILS
@@ -39,78 +39,91 @@ const Landform = () => {
   const [utilities, setUtilities] = useState([])
   const [newUtility, setNewUtility] = useState('')
 
+  //ADDITIONL INFORMATION
+  const [additionalDetails, setadditionalDetails] = useState('')
+
   //UPLOAD PHOTOS
   const [images, setImages] = useState([]);
+  const [imgUrl, setImgUrl] = useState(false)
+  const [finalImgArr, setFinalImgArr] = useState([])
   const handleFileChange = (e) => {
     setImages([...images, ...e.target.files]);
   };
-  //ADDITIONL INFORMATION
-  const [LandAdditionalDetails, setLandAdditionalDetails] = useState('')
-  const [err, setErr] = useState(false)
-  useEffect(() => {
-    (LandAdditionalDetails.length > 1000) ? (setErr(true)) : (setErr(false))
-  }, [LandAdditionalDetails])
 
 
+  const token = localStorage.getItem('token')
   //HANDLE SUBMIT
-  const handleSubmit = async (e) => {
+  const handleUploadImages = async (e) => {
     e.preventDefault();
-    const token=localStorage.getItem('token')
-    if(!token){
-      toast.error('Please sign in first')
+    if (images.length === 0) {
+      toast.error("No Image Chosen !")
+      return
     }
-    else{
-    if (LandAdditionalDetails.length > 1000) {
-      setErr(true)
+    let arr = []
+    for (let i = 0; i < images.length; i++) {
+      const imgData = new FormData()
+      imgData.append('upload_preset', 'insta_clone')
+      imgData.append('file', images[i])
+      await axios.post('https://api.cloudinary.com/v1_1/harshada0611/image/upload', imgData)
+        .then(resp => {
+          // console.log(resp);
+          arr.push(resp.data.secure_url)
+        })
+        .catch(err => console.log(err))
     }
-    else {
-      toast.loading('Posting property data')
+    console.log(arr);
+    setFinalImgArr(arr)
 
-      try {
-        const formData = new FormData();
-
-        //append property data
-        for (let key of Object.keys(LandData)) {
-          formData.append(key, LandData[key]);
-        }
-
-        //append location data
-        for (let key of Object.keys(landLocality)) {
-          formData.append(key, landLocality[key]);
-        }
-        //append utilities
-        utilities.forEach((aminity, index) => {
-          formData.append(`utilities[${index}]`, aminity);
-        });
-        //append photos
-        images.forEach((image) => {
-          formData.append('images', image);
-        });
-
-        //append additional data
-        formData.append('additionalInfo', LandAdditionalDetails);
-        const token = localStorage.getItem("token")
-
-        const response = await axios.post('/property-form', formData, {
-          headers: {
-            authorization: token
-          }
-        });
-        if (response.data.success) {
-          toast.dismiss()
-          console.log(response.data.property)
-          console.log('response ', response.data.property);
-          navigate('/my-property')
-        }
-      }
-    
-      catch (err) {
-        console.log(err);
-      }
+    if (arr.length !== 0) {
+      setImgUrl(true);
     }
   }
 
-  };
+
+  const handlePost = async () => {
+    const data = {
+      ...LandData,
+      ...landLocality,
+      utilities: utilities,
+      imgArr: finalImgArr,
+      additionalDetails: additionalDetails
+    }
+    console.log('data before posting', data)
+
+    try {
+      toast.loading('Uploading images. Please wait')
+
+      const response = await axios.post('/land-form', data, {
+        headers: {
+          authorization: token
+        }
+      })
+
+      if (response.data.success) {
+        console.log('data saved in db', response)
+        toast.dismiss()
+        toast.success('Property posted successfully')
+      }
+      else {
+        toast.error()
+      }
+    }
+    catch (err) {
+      console.log(err)
+    }
+
+  }
+
+
+
+  useEffect(() => {
+    if (imgUrl) {
+      handlePost();
+    }
+    // eslint-disable-next-line
+  }, [imgUrl])
+
+
 
 
   return (
@@ -147,7 +160,7 @@ const Landform = () => {
           <Typography>UTILITIES</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <LandUtilities utilities={utilities} setUtilities={setUtilities} newUtility={newUtility} setNewUtility={setNewUtility}/>
+          <LandUtilities utilities={utilities} setUtilities={setUtilities} newUtility={newUtility} setNewUtility={setNewUtility} />
         </AccordionDetails>
       </Accordion>
       {/* section 2 ends */}
@@ -209,15 +222,14 @@ const Landform = () => {
           <Typography>ADDITIONAL INFORMATION</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <LandAdditionalInfo LandAdditionalDetails={LandAdditionalDetails} setLandAdditionalDetails={setLandAdditionalDetails}
-            err={err} set={setErr} />
+          <LandAdditionalInfo additionalDetails={additionalDetails} setadditionalDetails={setadditionalDetails} />
         </AccordionDetails>
       </Accordion>
       {/* section 5 ends */}
 
 
 
-      <Button type='submit' className='btn' onClick={handleSubmit}>POST</Button>
+      <Button type='submit' className='btn' onClick={handleUploadImages}>POST</Button>
 
       {/* </form> */}
     </div>

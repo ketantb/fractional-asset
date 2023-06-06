@@ -38,7 +38,7 @@ const ArtDetails = ({ artData, setArtData }) => {
                     name='artworkTitle' value={artData.artworkTitle} onChange={handleInputs} />
             </FormControl>
             <FormControl className='form-field'>
-                <TextField type='number' id="standard-basic" label="Medium" variant="standard"
+                <TextField type='text' id="standard-basic" label="Medium" variant="standard"
                     name='medium' value={artData.medium} onChange={handleInputs} />
             </FormControl>
             <FormControl className='form-field'>

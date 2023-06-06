@@ -33,6 +33,7 @@ import EnquirySection from './components/website-details/enquiryContactSection/E
 import HowItWorks from './components/website-details/how-it-works/HowItWorks';
 
 import Footer from './components/footer/Footer'
+import MyProperty from './components/my-profile-section/my-property/MyProperty';
 
 
 
@@ -77,6 +78,9 @@ function App() {
           {/* landing pages  end*/}
 
 
+          {/* my profile page roues */}
+          <Route path='/my-property' element={<MyProperty />}></Route>
+          {/* my profile page routes end */}
 
           {/*footer componenets */}
           <Route path="/enquiry" element={<EnquirySection />} />

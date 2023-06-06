@@ -17,10 +17,8 @@ const carSchema = new mongoose.Schema({
     totalShares: { type: Number },
     availableShares: { type: Number },
     perSharePrice: { type: Number },
-    additionalInfo: { type: String },
-    images: [{ type: String }],
-    postingDate: { type: String },
-    postingTime: { type: String },
+    additionalDetails: { type: String },
+    imgArr: [{ type: String }],
     productType: { type: String, default: 'car' },
     userId: mongoose.Schema.Types.ObjectId,
 })
