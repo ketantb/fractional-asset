@@ -4,6 +4,7 @@ const Schema = mongoose.Schema
 
 const AddPropertySchema = new mongoose.Schema({
   //locality details
+  propertyType: { type: String },
   propertyAdType: { type: String },
   street: { type: String },
   landmark: { type: String },
@@ -11,7 +12,6 @@ const AddPropertySchema = new mongoose.Schema({
   pin: { type: String },
   state: { type: String },
   nearbyPlaces: { type: String },
-  advertiseType: { type: String },
   propertyAge: { type: String },
   area: { type: String },
   noOfBedrooms: { type: Number },
@@ -21,14 +21,9 @@ const AddPropertySchema = new mongoose.Schema({
   availableShares: { type: Number },
   perSharePrice: { type: Number },
   additionalInfo: { type: String },
-  images: [{ type: String }],
+  imgArr: [{ type: String }],
   price: { type: Number },
-  priceCurrency: { type: String },
   aminities: [{ type: String }],
-  postingDate: { type: String },
-  postingTime: { type: String },
-  productType: {type: String, default: 'property'},
-  productId: { type: String },
   userId: Schema.Types.ObjectId
 });
 

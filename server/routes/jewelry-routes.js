@@ -1,74 +1,32 @@
 const router = require("express").Router();
-const multer = require("multer");
 
-const Jewelry = require("../Model/jewelryModel");
+const Jewellery = require("../Model/jewelryModel");
 const userMiddleware = require('../midleware/userMiddlware')
-const { upload, resizeImage } = require('../midleware/uploadImages');
 
 
-// Define Multer storage options
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, './uploads/');
-    },
-    filename: function (req, file, cb) {
-        cb(null, Date.now() + path.extname(file.originalname));
-    }
-});
+
 
 //ADD NEW PRODUCT
-/*/
-router.post("/jewelry-form", upload.array('images', 8), userMiddleware, async (req, resp) => {
-  console.log('token is from post form', req.body.userId)
-  console.log(req.body)
-  try {
-
-    //images
-    let imageUrlList = [];
-    for (let i = 0; i < req.files.length; i++) {
-      let locaFilePath = req.files[i].path;
-      // Upload the local image to Cloudinary
-      // and get image url as response
-      const result = await resizeImage(locaFilePath)
-      imageUrlList.push(result.url);
-    }
-    const newProperty = await Jewelry.create({
-      ...req.body,
-      aminites: req.body.aminites,
-      images: imageUrlList,
-      user: req.body.userId
-    })
-    // image: req.files.map(file => file.filename)
-    console.log(newProperty)
-    resp.json({ success: true, message: 'Data created successfully', jewelry: newProperty })
-  }
-  catch (err) {
-    resp.json({ message: 'something is wrong in positng complete form data', err })
-  }
-}) */
-
-
-
-router.post("/jewelry-form", async (req, resp) => {
+router.post("/jewellery-form", userMiddleware, async (req, resp) => {
     console.log('token is from post form', req.body.userId)
-    console.log(req.body)
+    // console.log(req.body)
     try {
 
-        //images
-        let imageUrlList = [];
-        const newJewelry = await Jewelry.create({
+        const newJewellery = await Jewellery.create({
             ...req.body,
-            images: req.body.images,
-            userId: req.body.userId
+            user: req.body.userId
         })
         // image: req.files.map(file => file.filename)
-        console.log(newJewelry)
-        resp.json({ success: true, message: 'Data created successfully', jewelry: newJewelry })
+        console.log(newJewellery)
+        resp.json({ success: true, message: 'Data created successfully', jewelry: newJewellery })
     }
     catch (err) {
         resp.json({ message: 'something is wrong in positng complete form data', err })
     }
 })
+
+
+
 
 
 
@@ -175,7 +133,7 @@ router.get('/jewelry-details/:id', async (req, resp) => {
 
 
 
-//GET PROPERTY LIST BY CITY
+//GET JewelleryLIST BY CITY
 router.get('/city/jewelry/:id', async (req, resp) => {
     const { id } = req.params
     console.log(id)
@@ -198,7 +156,7 @@ router.get('/city/jewelry/:id', async (req, resp) => {
 
 
 
-//DELETE PORPERTY ONLY ACCESSIBLE IN PRIVATE MY PROPERTY SECTION
+//DELETE PORPERTY ONLY ACCESSIBLE IN PRIVATE MY JewellerySECTION
 router.delete('/delete/jewelry/:id', userMiddleware, async (req, resp) => {
     const { id } = req.params
     try {

@@ -1,65 +1,19 @@
 const router = require("express").Router();
-const multer = require("multer");
 
 const Art = require("../Model/artModel");
 const userMiddleware = require('../midleware/userMiddlware')
-const { upload, resizeImage } = require('../midleware/uploadImages');
 
 
-// Define Multer storage options
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, './uploads/');
-    },
-    filename: function (req, file, cb) {
-        cb(null, Date.now() + path.extname(file.originalname));
-    }
-});
 
 //ADD NEW PRODUCT
-/*/
-router.post("/art-form", upload.array('images', 8), userMiddleware, async (req, resp) => {
-  console.log('token is from post form', req.body.userId)
-  console.log(req.body)
-  try {
-
-    //images
-    let imageUrlList = [];
-    for (let i = 0; i < req.files.length; i++) {
-      let locaFilePath = req.files[i].path;
-      // Upload the local image to Cloudinary
-      // and get image url as response
-      const result = await resizeImage(locaFilePath)
-      imageUrlList.push(result.url);
-    }
-    const newProperty = await Art.create({
-      ...req.body,
-      aminites: req.body.aminites,
-      images: imageUrlList,
-      user: req.body.userId
-    })
-    // image: req.files.map(file => file.filename)
-    console.log(newProperty)
-    resp.json({ success: true, message: 'Data created successfully', art: newProperty })
-  }
-  catch (err) {
-    resp.json({ message: 'something is wrong in positng complete form data', err })
-  }
-}) */
-
-
-
-router.post("/art-form", async (req, resp) => {
+router.post("/art-form", userMiddleware, async (req, resp) => {
     console.log('token is from post form', req.body.userId)
     console.log(req.body)
     try {
 
-        //images
-        let imageUrlList = [];
         const newArt = await Art.create({
             ...req.body,
-            images: req.body.images,
-            userId: req.body.userId
+            user: req.body.userId
         })
         // image: req.files.map(file => file.filename)
         console.log(newArt)
@@ -72,22 +26,24 @@ router.post("/art-form", async (req, resp) => {
 
 
 
-// MY PROPERTIES login required
-// router.get("/listing-my-product", userMiddleware, async (req, res) => {
-//   console.log('thid is id', req.body.userId)
-//   let myList = await Art.find({ user: req.body.userId });
 
-//   try {
-//     if (myList) {
-//       res.json({ success: true, list: myList });
-//     }
-//     else {
-//       res.json({ success: false, msg: 'No Data Found' })
-//     }
-//   } catch (er) {
-//     res.json({ success: false, message: er.message });
-//   }
-// });
+
+// my Art login required
+router.get("/listing-my-product", userMiddleware, async (req, res) => {
+    console.log('thid is id', req.body.userId)
+    let myList = await Art.find({ user: req.body.userId });
+
+    try {
+        if (myList) {
+            res.json({ success: true, list: myList });
+        }
+        else {
+            res.json({ success: false, msg: 'No Data Found' })
+        }
+    } catch (er) {
+        res.json({ success: false, message: er.message });
+    }
+});
 
 
 // MY PROPERTIES login required

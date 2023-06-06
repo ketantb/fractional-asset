@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import './CarForm.css'
 import axios from '../../../helpers/axios';
 // import axios from 'axios'
-import {toast} from 'react-hot-toast';
+import { toast } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom'
 
 import { Button } from '@mui/material';
@@ -22,92 +22,107 @@ import { FaHandPointDown } from "react-icons/fa";
 
 const Carform = () => {
   const navigate = useNavigate()
-
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
 
 
   //PROPERTY DETAILS
   const [carData, setCarData] = useState({
-    propertyAdType : '', manufacturer: '', model: '',
+    propertyAdType: '', manufacturer: '', model: '',
     year: '', mileage: '', exteriorColor: '', interiorColor: '',
     price: '', totalShares: '', availableShares: '', perSharePrice: ''
   })
 
   //Technical DETAILS
   const [carTechDetails, setCarTechDetails] = useState({
-    transmission: '', engineType: '', fuelType: '', 
+    transmission: '', engineType: '', fuelType: '',
     driveTrain: '', vinNumber: ''
   })
 
+
   //UPLOAD PHOTOS
   const [images, setImages] = useState([]);
+  const [imgUrl, setImgUrl] = useState(false)
+  const [finalImgArr, setFinalImgArr] = useState([])
   const handleFileChange = (e) => {
     setImages([...images, ...e.target.files]);
   };
+
   //ADDITIONL INFORMATION
   const [additionalDetails, setAdditionalDetails] = useState('')
-  const [err, setErr] = useState(false)
-
-  useEffect(() => {
-    (additionalDetails.length > 1000) ? (setErr(true)) : (setErr(false))
-  }, [additionalDetails])
 
 
+  const token = localStorage.getItem('token')
   //HANDLE SUBMIT
-  const handleSubmit = async (e) => {
+  const handleUploadImages = async (e) => {
     e.preventDefault();
-    const token=localStorage.getItem('token')
-    if(!token){
-      toast.error('Please sign in first')
+    if (images.length === 0) {
+      toast.error("No Image Chosen !")
+      return
     }
-    else{
-    if (additionalDetails.length > 1000) {
-      setErr(true)
+    let arr = []
+    for (let i = 0; i < images.length; i++) {
+      const imgData = new FormData()
+      imgData.append('upload_preset', 'insta_clone')
+      imgData.append('file', images[i])
+      await axios.post('https://api.cloudinary.com/v1_1/harshada0611/image/upload', imgData)
+        .then(resp => {
+          // console.log(resp);
+          arr.push(resp.data.secure_url)
+        })
+        .catch(err => console.log(err))
     }
-    else {
-      toast.loading('Posting car data')
+    console.log(arr);
+    setFinalImgArr(arr)
 
-      try {
-        const formData = new FormData();
-
-        //append property data
-        for (let key of Object.keys(carData)) {
-          formData.append(key, carData[key]);
-        }
-
-        //append location data
-        for (let key of Object.keys(carTechDetails)) {
-          formData.append(key, carTechDetails[key]);
-        }
-
-        //append photos
-        images.forEach((image) => {
-          formData.append('images', image);
-        });
-
-        //append additional data
-        formData.append('additionalInfo', additionalDetails);
-        const token = localStorage.getItem("token")
-
-        const response = await axios.post('/property-form', formData, {
-          headers: {
-            authorization: token
-          }
-        });
-        if (response.data.success) {
-          toast.dismiss()
-          console.log(response.data.property)
-          console.log('response ', response.data.property);
-          navigate('/my-property')
-        }
-      }
-    
-      catch (err) {
-        console.log(err);
-      }
+    if (arr.length !== 0) {
+      setImgUrl(true);
     }
   }
 
-  };
+
+  const handlePost = async () => {
+    const data = {
+      ...carData,
+      ...carTechDetails,
+      imgArr: finalImgArr,
+      additionalDetails: additionalDetails
+    }
+    console.log('data before posting', data)
+
+    try {
+      toast.loading('Uploading images. Please wait')
+
+      const response = await axios.post('/car-form', data, {
+        headers: {
+          authorization: token
+        }
+      })
+
+      if (response.data.success) {
+        console.log('data saved in db', response)
+        toast.dismiss()
+        toast.success('Property posted successfully')
+      }
+      else {
+        toast.error()
+      }
+    }
+    catch (err) {
+      console.log(err)
+    }
+
+  }
+
+
+
+  useEffect(() => {
+    if (imgUrl) {
+      handlePost();
+    }
+    // eslint-disable-next-line
+  }, [imgUrl])
 
 
   return (
@@ -188,15 +203,14 @@ const Carform = () => {
           <Typography>ADDITIONAL INFORMATION</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <AdditionalInfo additionalDetails={additionalDetails} setAdditionalDetails={setAdditionalDetails}
-            err={err} set={setErr} />
+          <AdditionalInfo additionalDetails={additionalDetails} setAdditionalDetails={setAdditionalDetails} />
         </AccordionDetails>
       </Accordion>
       {/* section 5 ends */}
 
 
 
-      <Button type='submit' className='btn' onClick={handleSubmit}>POST</Button>
+      <Button type='submit' className='btn' onClick={handleUploadImages}>POST</Button>
 
       {/* </form> */}
     </div>

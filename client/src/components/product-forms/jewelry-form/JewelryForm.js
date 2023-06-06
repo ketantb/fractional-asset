@@ -14,7 +14,7 @@ import Typography from '@mui/material/Typography';
 
 import { FaHandPointDown } from "react-icons/fa";
 import JewelryDetails from './jewelryFormSteps/JewelryDetails';
-import JewelryAdditionalInfo from './jewelryFormSteps/JewelryAdditionalInfo';
+import JewelryAdditionalInfo from './jewelryFormSteps/AdditionalInfo';
 
 
 
@@ -34,69 +34,86 @@ const Jewelryform = () => {
 
     //UPLOAD PHOTOS
     const [images, setImages] = useState([]);
+    const [imgUrl, setImgUrl] = useState(false)
+    const [finalImgArr, setFinalImgArr] = useState([])
     const handleFileChange = (e) => {
         setImages([...images, ...e.target.files]);
     };
+
     //ADDITIONL INFORMATION
-    const [jewelryAdditionalDetails, setJewelryAdditionalDetails] = useState('')
-    const [err, setErr] = useState(false)
-
-    useEffect(() => {
-        (jewelryAdditionalDetails.length > 1000) ? (setErr(true)) : (setErr(false))
-    }, [jewelryAdditionalDetails])
+    const [additionalDetails, setAdditionalDetails] = useState('')
 
 
+    const token = localStorage.getItem('token')
     //HANDLE SUBMIT
-    const handleSubmit = async (e) => {
+    const handleUploadImages = async (e) => {
         e.preventDefault();
-        const token = localStorage.getItem('token')
-        if (!token) {
-            toast.error('Please sign in first')
+        if (images.length === 0) {
+            toast.error("No Image Chosen !")
+            return
         }
-        else {
-            if (jewelryAdditionalDetails.length > 1000) {
-                setErr(true)
+        let arr = []
+        for (let i = 0; i < images.length; i++) {
+            const imgData = new FormData()
+            imgData.append('upload_preset', 'insta_clone')
+            imgData.append('file', images[i])
+            await axios.post('https://api.cloudinary.com/v1_1/harshada0611/image/upload', imgData)
+                .then(resp => {
+                    // console.log(resp);
+                    arr.push(resp.data.secure_url)
+                })
+                .catch(err => console.log(err))
+        }
+        console.log(arr);
+        setFinalImgArr(arr)
+
+        if (arr.length !== 0) {
+            setImgUrl(true);
+        }
+    }
+
+
+    const handlePost = async () => {
+        const data = {
+            ...jewelryData,
+            imgArr: finalImgArr,
+            additionalDetails: additionalDetails
+        }
+        console.log('data before posting', data)
+
+        try {
+            toast.loading('Uploading images. Please wait')
+
+            const response = await axios.post('/jewellery-form', data, {
+                headers: {
+                    authorization: token
+                }
+            })
+
+            if (response.data.success) {
+                console.log('data saved in db', response)
+                toast.dismiss()
+                toast.success('Property posted successfully')
             }
             else {
-                toast.loading('Posting jewelery data')
-
-                try {
-                    const formData = new FormData();
-
-                    //append property data
-                    for (let key of Object.keys(jewelryData)) {
-                        formData.append(key, jewelryData[key]);
-                    }
-
-                    //append photos
-                    images.forEach((image) => {
-                        formData.append('images', image);
-                    });
-
-                    //append additional data
-                    formData.append('additionalInfo', jewelryAdditionalDetails);
-                    const token = localStorage.getItem("token")
-
-                    const response = await axios.post('/property-form', formData, {
-                        headers: {
-                            authorization: token
-                        }
-                    });
-                    if (response.data.success) {
-                        toast.dismiss()
-                        console.log(response.data.property)
-                        console.log('response ', response.data.property);
-                        navigate('/my-property')
-                    }
-                }
-
-                catch (err) {
-                    console.log(err);
-                }
+                console.log(response)
+                toast.error()
             }
         }
+        catch (err) {
+            console.log(err)
+        }
 
-    };
+    }
+
+
+
+    useEffect(() => {
+        if (imgUrl) {
+            handlePost();
+        }
+        // eslint-disable-next-line
+    }, [imgUrl])
 
 
     return (
@@ -114,7 +131,7 @@ const Jewelryform = () => {
                     expandIcon={'+'}
                     aria-controls="panel1a-content"
                     id="panel1a-header">
-                    <Typography>CAR</Typography>
+                    <Typography>JEWELLERY DETAILS</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
                     <JewelryDetails jewelryData={jewelryData} setJewelryData={setJewelryData} />
@@ -129,7 +146,7 @@ const Jewelryform = () => {
                     id="panel2a-header"
                     expandIcon={'+'}
                 >
-                    <Typography>UPLOAD CAR IMAGES</Typography>
+                    <Typography>UPLOAD JEWELLERY IMAGES</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
                     <div className='upload-image-form-wrapper'>
@@ -161,15 +178,15 @@ const Jewelryform = () => {
                     <Typography>ADDITIONAL INFORMATION</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
-                    <JewelryAdditionalInfo jewelryAdditionalDetails={jewelryAdditionalDetails} setJewelryAdditionalDetails={setJewelryAdditionalDetails}
-                        err={err} set={setErr} />
+                    <JewelryAdditionalInfo additionalDetails={additionalDetails} setAdditionalDetails={setAdditionalDetails}
+                    />
                 </AccordionDetails>
             </Accordion>
             {/* section 5 ends */}
 
 
 
-            <Button type='submit' className='btn' onClick={handleSubmit}>POST</Button>
+            <Button type='submit' className='btn' onClick={handleUploadImages}>POST</Button>
 
             {/* </form> */}
         </div>

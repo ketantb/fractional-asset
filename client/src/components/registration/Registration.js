@@ -14,7 +14,6 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { toast } from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
 import axios from '../../helpers/axios'
-import ClipLoader from "react-spinners/ClipLoader";
 
 
 

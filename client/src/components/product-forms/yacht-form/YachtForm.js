@@ -16,9 +16,8 @@ import AdditionalInfo from './yachtFormSteps/AdditionalInfo'
 
 import { FaHandPointDown } from "react-icons/fa";
 import YachtDetails from './yachtFormSteps/YachtDetails';
-import YachtAminity from './yachtFormSteps/YachtAminities';
+import Aminity from './yachtFormSteps/YachtAminities';
 import YachtTechnicalDetails from './yachtFormSteps/YachtTechnicalDetails';
-import YachtElectronic from './yachtFormSteps/yachtElectronics';
 
 
 
@@ -41,97 +40,98 @@ const Yachtform = () => {
     fuelCapacityUnit: '', waterCapacity: '',
     waterCapacityUnit: '', accommodationsQty: '',
     numberOfCabins: '', numberOfHeads: '', generator: '',
-    airConditioning: '', electronics: []
+    airConditioning: ''
   })
   //AMINTIES
-  const [yachtAminities, setYachtAminities] = useState([])
-  const [newYachtAminity, setNewYachtAminity] = useState('')
+  const [aminities, setAminity] = useState([])
+  const [newAminity, setNewAminity] = useState('')
 
-  //ELECTRONICS
-  const [yachtElectronics, setYachtElectronics] = useState([])
-  const [newYachtElectronics, setNewYachtElectronics] = useState('')
 
   //UPLOAD PHOTOS
   const [images, setImages] = useState([]);
+  const [imgUrl, setImgUrl] = useState(false)
+  const [finalImgArr, setFinalImgArr] = useState([])
   const handleFileChange = (e) => {
     setImages([...images, ...e.target.files]);
   };
 
   //ADDITIONL INFORMATION
   const [additionalDetails, setAdditionalDetails] = useState('')
-  const [err, setErr] = useState(false)
+
+
+  const token = localStorage.getItem('token')
+  //HANDLE SUBMIT
+  const handleUploadImages = async (e) => {
+    e.preventDefault();
+    if (images.length === 0) {
+      toast.error("No Image Chosen !")
+      return
+    }
+    let arr = []
+    for (let i = 0; i < images.length; i++) {
+      const imgData = new FormData()
+      imgData.append('upload_preset', 'insta_clone')
+      imgData.append('file', images[i])
+      await axios.post('https://api.cloudinary.com/v1_1/harshada0611/image/upload', imgData)
+        .then(resp => {
+          // console.log(resp);
+          arr.push(resp.data.secure_url)
+        })
+        .catch(err => console.log(err))
+    }
+    console.log(arr);
+    setFinalImgArr(arr)
+
+    if (arr.length !== 0) {
+      setImgUrl(true);
+    }
+  }
+
+
+  const handlePost = async () => {
+    const data = {
+      ...yachtData,
+      ...yachtTechDetails,
+      aminities: aminities,
+      imgArr: finalImgArr,
+      additionalDetails: additionalDetails
+    }
+    console.log('data before posting', data)
+
+    try {
+      toast.loading('Uploading images. Please wait')
+
+      const response = await axios.post('/yacht-form', data, {
+        headers: {
+          authorization: token
+        }
+      })
+
+      if (response.data.success) {
+        console.log('data saved in db', response)
+        toast.dismiss()
+        toast.success('Property posted successfully')
+      }
+      else {
+        toast.error()
+      }
+    }
+    catch (err) {
+      console.log(err)
+    }
+
+  }
+
 
 
   useEffect(() => {
-    (additionalDetails.length > 1000) ? (setErr(true)) : (setErr(false))
-  }, [additionalDetails])
-
-
-  //HANDLE SUBMIT
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    console.log('yachtData => ', yachtData)
-    console.log('yachtData =>', yachtTechDetails)
-    console.log('yachtData => ', additionalDetails)
-    console.log('images =>', images)
-    return
-    const token = localStorage.getItem('token')
-    if (!token) {
-      toast.error('Please sign in first')
+    if (imgUrl) {
+      handlePost();
     }
-    else {
-      if (additionalDetails.length > 1000) {
-        setErr(true)
-      }
-      else {
-        toast.loading('Posting yacht data')
+    // eslint-disable-next-line
+  }, [imgUrl])
 
-        try {
-          const formData = new FormData();
 
-          //append yacht data
-          for (let key of Object.keys(yachtData)) {
-            formData.append(key, yachtData[key]);
-          }
-
-          //append technical data
-          for (let key of Object.keys(yachtTechDetails)) {
-            formData.append(key, yachtTechDetails[key]);
-          }
-          //append yachtAminities
-          yachtAminities.forEach((aminity, index) => {
-            formData.append(`yachtAminities[${index}]`, aminity);
-          });
-          //append photos
-          images.forEach((image) => {
-            formData.append('images', image);
-          });
-
-          //append additional data
-          formData.append('additionalInfo', additionalDetails);
-          const token = localStorage.getItem("token")
-          console.log(formData)
-          return;
-          const response = await axios.post('/property-form', formData, {
-            headers: {
-              authorization: token
-            }
-          });
-          if (response.data.success) {
-            toast.dismiss()
-            console.log(response.data.property)
-            console.log('response ', response.data.property);
-            navigate('/my-property')
-          }
-        }
-
-        catch (err) {
-          console.log(err);
-        }
-      }
-    }
-
-  };
 
 
   return (
@@ -168,24 +168,13 @@ const Yachtform = () => {
           <Typography>AMINITIES</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <YachtAminity yachtAminities={yachtAminities} setYachtAminities={setYachtAminities} newYachtAminity={newYachtAminity} setNewYachtAminity={setNewYachtAminity} />
+          <Aminity aminities={aminities} setAminities={setAminity} newAminity={newAminity} setNewAminity={setNewAminity} />
         </AccordionDetails>
       </Accordion>
       {/* section 2 ends */}
 
 
-      <Accordion>
-        <AccordionSummary
-          expandIcon={'+'}
-          aria-controls="panel1a-content"
-          id="panel1a-header"
-        >
-          <Typography>ELECTRONICS</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <YachtElectronic yachtElectronics={yachtElectronics} setYachtElectronics={setYachtElectronics} newYachtElectronics={newYachtElectronics} setNewYachtElectronics={setNewYachtElectronics} />
-        </AccordionDetails>
-      </Accordion>
+
 
 
       {/* section 3 */}
@@ -243,15 +232,14 @@ const Yachtform = () => {
           <Typography>ADDITIONAL INFORMATION</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <AdditionalInfo additionalDetails={additionalDetails} setAdditionalDetails={setAdditionalDetails}
-            err={err} set={setErr} />
+          <AdditionalInfo additionalDetails={additionalDetails} setAdditionalDetails={setAdditionalDetails} />
         </AccordionDetails>
       </Accordion>
       {/* section 5 ends */}
 
 
 
-      <Button type='submit' className='btn' onClick={handleSubmit}>POST</Button>
+      <Button type='submit' className='btn' onClick={handleUploadImages}>POST</Button>
 
       {/* </form> */}
     </div>
