@@ -9,9 +9,11 @@
 }
 
 .whyus-wrapper .title {
-    font-family: 'alkatra';
     text-align: center;
-    letter-spacing: 3px;
+    font-family: 'Playfair Display', serif;
+    font-size: 45px;
+    font-weight: 500;
+    margin-bottom: 4rem;
 }
 
 .whyus-wrapper .card-wrapper-inner {
@@ -31,10 +33,19 @@
     /* background-color: rgb(228, 240, 244); */
     border: 1px solid lightgrey;
     margin: 0 1rem;
+    background-color: #b6d9ff;
     box-shadow: rgba(1, 7, 45, 0.25) 0px 30px 60px -0px inset, rgba(186, 220, 249, 0.3) 0px 18px 36px -18px inset;
 }
 
-.whyus-wrapper .card-wrapper-inner .card:last-child{
+.whyus-wrapper .card-wrapper-inner .card:nth-child(2){
+    padding-top: 0px;
+}
+
+.whyus-wrapper .card-wrapper-inner .card:nth-child(2) .para{
+    margin-top: 2.5rem;
+}
+
+.whyus-wrapper .card-wrapper-inner .card:last-child {
     margin-top: 0;
 }
 
@@ -54,6 +65,7 @@
 }
 
 .whyus-wrapper .card-wrapper-inner .card .heading {
+    /* border: 1px solid black; */
     font-weight: bold;
 }
 
@@ -63,6 +75,7 @@
     text-align: center;
     width: 75%;
     margin: auto;
+    font-weight: 500;
 }
 
 .whyus-wrapper div:last-child {

@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import './HowItWorks.css'
 import { Typography } from '@mui/material'
+import HowItWorksSteps from './howitworks-step/steps'
 
 const array = [
   {
@@ -33,7 +34,7 @@ const HowItWorks = () => {
     window.scrollTo(0, 0)
   }, [])
 
-  
+
   return (
     <div className='howitworks-wrapper'>
       <div className='section1'>
@@ -78,6 +79,9 @@ const HowItWorks = () => {
           </p>
         </div>
       </div>
+      <section>
+        <HowItWorksSteps />
+      </section>
     </div>
   )
 }

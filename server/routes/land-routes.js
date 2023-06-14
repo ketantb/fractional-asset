@@ -8,7 +8,7 @@ const userMiddleware = require('../midleware/userMiddlware')
 
 //ADD NEW PRODUCT
 
-router.post("/land-form", userMiddleware, async (req, resp) => {
+router.post("/land-form", async (req, resp) => {
   console.log('token is from post form', req.body.userId)
   console.log(req.body)
   try {

@@ -15,11 +15,11 @@
     justify-content: center;
     flex-wrap: wrap;
     position: relative;
-    padding: 1rem 10rem
+    padding: 1rem 10rem;
 }
 
 .asset-cards {
-    width: 27%;
+    width: 29%;
     height: 15rem;
     /* background-color: red; */
     margin: 20px;

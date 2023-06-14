@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import './LandForm.css'
 import axios from '../../../helpers/axios';
 // import axios from 'axios'
-import {toast} from 'react-hot-toast';
+import { toast } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom'
 
 import { Button } from '@mui/material';
@@ -16,7 +16,7 @@ import LandUtilities from './landFormSteps/landUtilities';
 import LandDetails from './landFormSteps/landDetails';
 import LandLocality from './landFormSteps/landLocality';
 import LandAdditionalInfo from './landFormSteps/landAdditionalInfo';
-
+import { cloudinaryImgUpload } from '../../../helpers/cloudinary';
 
 
 const Landform = () => {
@@ -26,8 +26,8 @@ const Landform = () => {
   const [LandData, setLandData] = useState({
     propertyAdType: '', landType: '',
     dimensions: '', dimensionsUnit: '', lotSize: '',
-    lotSizeUnit: '', zoning: '', roadAccess: '', 
-    price: '', totalShares: '', availableShares: '', 
+    lotSizeUnit: '', zoning: '', roadAccess: '',
+    price: '', totalShares: '', availableShares: '',
     perSharePrice: ''
   })
   //LOCATION DETAILS
@@ -40,9 +40,9 @@ const Landform = () => {
   const [newUtility, setNewUtility] = useState('')
 
   //UPLOAD PHOTOS
-  const [images, setImages] = useState([]);
+  const [imgArray, setImgArray] = useState([]);
   const handleFileChange = (e) => {
-    setImages([...images, ...e.target.files]);
+    setImgArray([...imgArray, ...e.target.files]);
   };
   //ADDITIONL INFORMATION
   const [landAdditionalDetails, setLandAdditionalDetails] = useState('')
@@ -55,62 +55,44 @@ const Landform = () => {
   //HANDLE SUBMIT
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const token=localStorage.getItem('token')
-    if(!token){
+    const token = localStorage.getItem('token')
+    if (!token) {
       toast.error('Please sign in first')
     }
-    else{
-    if (landAdditionalDetails.length > 1000) {
-      setErr(true)
-    }
     else {
-      toast.loading('Posting property data')
-
-      try {
-        const formData = new FormData();
-
-        //append property data
-        for (let key of Object.keys(LandData)) {
-          formData.append(key, LandData[key]);
-        }
-
-        //append location data
-        for (let key of Object.keys(landLocality)) {
-          formData.append(key, landLocality[key]);
-        }
-        //append utilities
-        utilities.forEach((aminity, index) => {
-          formData.append(`utilities[${index}]`, aminity);
-        });
-        //append photos
-        images.forEach((image) => {
-          formData.append('images', image);
-        });
-
-        //append additional data
-        formData.append('additionalInfo', landAdditionalDetails);
-        const token = localStorage.getItem("token")
-
-        const response = await axios.post('/property-form', formData, {
-          headers: {
-            authorization: token
-          }
-        });
-        if (response.data.success) {
-          toast.dismiss()
-          console.log(response.data.property)
-          console.log('response ', response.data.property);
-          navigate('/my-property')
-        }
+      if (landAdditionalDetails.length > 1000) {
+        setErr(true)
       }
-    
-      catch (err) {
-        console.log(err);
+      else {
+        toast.loading('Posting property data')
+        let images = [];
+        for (let i = 0; i < imgArray.length; i++) {
+          const urlData = await cloudinaryImgUpload(imgArray[i])
+          images.push(urlData)
+        }
+        try {
+          const form = { ...LandData, ...landLocality, utilities, landAdditionalDetails, images }
+          const token = localStorage.getItem("token")
+
+          const response = await axios.post('/land-form', form, {
+            headers: {
+              authorization: token
+            }
+          });
+          if (response.data.success) {
+            toast.dismiss()
+            console.log(response.data.property)
+            console.log('response ', response.data.land);
+            // navigate('/land-form')
+          }
+        }
+
+        catch (err) {
+          console.log(err);
+        }
       }
     }
   }
-
-  };
 
 
   return (
@@ -147,7 +129,7 @@ const Landform = () => {
           <Typography>UTILITIES</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <LandUtilities utilities={utilities} setUtilities={setUtilities} newUtility={newUtility} setNewUtility={setNewUtility}/>
+          <LandUtilities utilities={utilities} setUtilities={setUtilities} newUtility={newUtility} setNewUtility={setNewUtility} />
         </AccordionDetails>
       </Accordion>
       {/* section 2 ends */}
@@ -181,13 +163,13 @@ const Landform = () => {
         </AccordionSummary>
         <AccordionDetails>
           <div className='upload-image-form-wrapper'>
-            <p style={{ opacity: '0.6' }}>You can upload upto 8 images only</p>
+            <p style={{ opacity: '0.6' }}>You can upload upto 8 imgArray only</p>
             <form>
-              <input type="file" name="images" multiple onChange={handleFileChange} />
+              <input type="file" name="imgArray" multiple onChange={handleFileChange} />
             </form>
-            <div className='images-wrapper'>
-              {images.map((image) => (
-                <div className='uploaded-images' key={image} >
+            <div className='imgArray-wrapper'>
+              {imgArray.map((image) => (
+                <div className='uploaded-imgArray' key={image} >
                   <img src={URL.createObjectURL(image)} alt="" width="100" />
                 </div>
               ))}

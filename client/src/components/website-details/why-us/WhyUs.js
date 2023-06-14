@@ -17,7 +17,7 @@ const WhyUs = () => {
 
     return (
         <div className='whyus-wrapper'>
-            <Typography variant='h5' className='title'>WHY CHOOSE US</Typography>
+            <Typography variant='h5' className='title'>Why Choose Us</Typography>
             <div className='card-wrapper-inner'>
                 <div className='card' >
                     <div className='img-wrapper'>
