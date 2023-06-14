@@ -20,7 +20,6 @@ const AddPropertySchema = new mongoose.Schema({
   totalShares: { type: Number },
   availableShares: { type: Number },
   perSharePrice: { type: Number },
-  perSharePriceCurrency: { type: String },
   additionalInfo: { type: String },
   images: [{ type: String }],
   price: { type: Number },

@@ -45,11 +45,11 @@ const Landform = () => {
     setImages([...images, ...e.target.files]);
   };
   //ADDITIONL INFORMATION
-  const [LandAdditionalDetails, setLandAdditionalDetails] = useState('')
+  const [landAdditionalDetails, setLandAdditionalDetails] = useState('')
   const [err, setErr] = useState(false)
   useEffect(() => {
-    (LandAdditionalDetails.length > 1000) ? (setErr(true)) : (setErr(false))
-  }, [LandAdditionalDetails])
+    (landAdditionalDetails.length > 1000) ? (setErr(true)) : (setErr(false))
+  }, [landAdditionalDetails])
 
 
   //HANDLE SUBMIT
@@ -60,7 +60,7 @@ const Landform = () => {
       toast.error('Please sign in first')
     }
     else{
-    if (LandAdditionalDetails.length > 1000) {
+    if (landAdditionalDetails.length > 1000) {
       setErr(true)
     }
     else {
@@ -88,7 +88,7 @@ const Landform = () => {
         });
 
         //append additional data
-        formData.append('additionalInfo', LandAdditionalDetails);
+        formData.append('additionalInfo', landAdditionalDetails);
         const token = localStorage.getItem("token")
 
         const response = await axios.post('/property-form', formData, {
@@ -209,7 +209,7 @@ const Landform = () => {
           <Typography>ADDITIONAL INFORMATION</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <LandAdditionalInfo LandAdditionalDetails={LandAdditionalDetails} setLandAdditionalDetails={setLandAdditionalDetails}
+          <LandAdditionalInfo landAdditionalDetails={landAdditionalDetails} setLandAdditionalDetails={setLandAdditionalDetails}
             err={err} set={setErr} />
         </AccordionDetails>
       </Accordion>

@@ -47,6 +47,16 @@ const PropertyPage = () => {
     <div className='property-page-wrapper'>
       {/* background image */}
       <div className="bg-image">
+        <div className='left-polygon'>
+          <Typography className='banner-title'>
+            Smart Way To Own A Holiday Home
+            <br />
+            Own a luxury holiday home for a fraction of the total cost
+          </Typography>
+          <div className='arrow-polygon'>
+             
+          </div>
+        </div>
         <div className="container">
           <div className="row">
             <div className='bgwrapper'></div>

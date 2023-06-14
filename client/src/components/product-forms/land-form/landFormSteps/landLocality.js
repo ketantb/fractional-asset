@@ -7,11 +7,11 @@ import { FormLabel, TextField } from '@mui/material'
 
 
 
-const LandLocality = ({ landLocality, setlandLocality }) => {
+const LandLocality = ({ landLocality, setLandLocality }) => {
 
   //HANDLE INPUTS
   const handleInputs = (e) => {
-    setlandLocality(prevState => ({ ...prevState, [e.target.name]: e.target.value }))
+    setLandLocality(prevState => ({ ...prevState, [e.target.name]: e.target.value }))
   }
 
 

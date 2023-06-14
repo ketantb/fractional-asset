@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import './PropertyForm.css'
 import axios from '../../../helpers/axios';
 // import axios from 'axios'
-import {toast} from 'react-hot-toast';
+import { toast } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom'
 
 import { Button } from '@mui/material';
@@ -17,6 +17,8 @@ import Locality from './propertyFormSteps/Locality';
 import AdditionalInfo from './propertyFormSteps/AdditionalInfo'
 
 import { FaHandPointDown } from "react-icons/fa";
+
+import { cloudinaryImgUpload } from '../../../helpers/cloudinary';
 
 
 
@@ -37,13 +39,13 @@ const PropertyForm = () => {
   //AMINTIES
   const [aminities, setAminities] = useState([])
   const [newAminity, setNewAminity] = useState('')
-  
+
 
 
   //UPLOAD PHOTOS
-  const [images, setImages] = useState([]);
+  const [imgArray, setImgArray] = useState([]);
   const handleFileChange = (e) => {
-    setImages([...images, ...e.target.files]);
+    setImgArray([...imgArray, ...e.target.files]);
   };
   //ADDITIONL INFORMATION
   const [additionalDetails, setAdditionalDetails] = useState('')
@@ -56,60 +58,43 @@ const PropertyForm = () => {
   //HANDLE SUBMIT
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const token=localStorage.getItem('token')
-    if(!token){
+    const token = localStorage.getItem('token')
+    if (!token) {
       toast.error('Please sign in first')
     }
-    else{
-    if (additionalDetails.length > 1000) {
-      setErr(true)
-    }
     else {
-      toast.loading('Posting property data')
-
-      try {
-        const formData = new FormData();
-
-        //append property data
-        for (let key of Object.keys(propertyData)) {
-          formData.append(key, propertyData[key]);
-        }
-
-        //append location data
-        for (let key of Object.keys(locality)) {
-          formData.append(key, locality[key]);
-        }
-        //append aminities
-        aminities.forEach((aminity, index) => {
-          formData.append(`aminities[${index}]`, aminity);
-        });
-        //append photos
-        images.forEach((image) => {
-          formData.append('images', image);
-        });
-
-        //append additional data
-        formData.append('additionalInfo', additionalDetails);
-        const token = localStorage.getItem("token")
-
-        const response = await axios.post('/property-form', formData, {
-          headers: {
-            authorization: token
-          }
-        });
-        if (response.data.success) {
-          toast.dismiss()
-          console.log(response.data.property)
-          console.log('response ', response.data.property);
-          navigate('/my-property')
-        }
+      if (additionalDetails.length > 1000) {
+        setErr(true)
       }
-    
-      catch (err) {
-        console.log(err);
+      else {
+        toast.loading('Posting property data')
+        let images = [];
+        for (let i = 0; i < imgArray.length; i++) {
+          const urlData = await cloudinaryImgUpload(imgArray[i])
+          images.push(urlData)
+        }
+        try {
+          const form = { ...propertyData, ...locality, aminities, additionalDetails, images }
+          const token = localStorage.getItem("token")
+
+          const response = await axios.post('/property-form', form, {
+            headers: {
+              authorization: token
+            }
+          });
+          if (response.data.success) {
+            toast.dismiss()
+            console.log(response.data.property)
+            console.log('response ', response.data.property);
+            // navigate('/property-form')
+          }
+          console.log(form)
+        }
+        catch (err) {
+          console.log(err);
+        }
       }
     }
-  }
 
   };
 
@@ -148,7 +133,7 @@ const PropertyForm = () => {
           <Typography>AMINITIES</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <Amenities aminities={aminities} setAminities={setAminities} newAminity={newAminity} setNewAminity={setNewAminity}/>
+          <Amenities aminities={aminities} setAminities={setAminities} newAminity={newAminity} setNewAminity={setNewAminity} />
         </AccordionDetails>
       </Accordion>
       {/* section 2 ends */}
@@ -182,13 +167,13 @@ const PropertyForm = () => {
         </AccordionSummary>
         <AccordionDetails>
           <div className='upload-image-form-wrapper'>
-            <p style={{ opacity: '0.6' }}>You can upload upto 8 images only</p>
+            <p style={{ opacity: '0.6' }}>You can upload upto 8 imgArray only</p>
             <form>
-              <input type="file" name="images" multiple onChange={handleFileChange} />
+              <input type="file" maxLength={8} name="imgArray" multiple onChange={handleFileChange} />
             </form>
-            <div className='images-wrapper'>
-              {images.map((image) => (
-                <div className='uploaded-images' key={image} >
+            <div className='imgArray-wrapper'>
+              {imgArray.map((image) => (
+                <div className='uploaded-imgArray' key={image} >
                   <img src={URL.createObjectURL(image)} alt="" width="100" />
                 </div>
               ))}
